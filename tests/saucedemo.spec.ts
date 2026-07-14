@@ -46,4 +46,13 @@ test.describe('Saucedemo tests', () => {
         await page.getByRole('button', { name: 'Remove' }).click();
         await expect(page.locator('.shopping_cart_badge'), "Cart should be empty").toHaveCount(0);
     });
-})
+
+    test('Add a negative login test for locked_out_user', async ({ page }) => {
+        await page.goto('/');
+        await page.locator('[data-test="username"]').fill('locked_out_user');
+        await page.locator('[data-test="password"]').fill('secret_sauce');
+        await page.locator('[data-test="login-button"]').click();
+        const error = page.locator('[data-test="error"]');
+        await expect(error, 'Locked out user should see a locked-out error message').toHaveText('Epic sadface: Sorry, this user has been locked out.');
+    });
+});
