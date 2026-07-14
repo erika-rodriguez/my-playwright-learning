@@ -52,8 +52,7 @@ test.describe('Saucedemo tests', () => {
         await page.locator('[data-test="username"]').fill('locked_out_user');
         await page.locator('[data-test="password"]').fill('secret_sauce');
         await page.locator('[data-test="login-button"]').click();
-        const errorMsg = await page.locator('[data-test="error"]').textContent();
-
-        await expect(errorMsg, "Error should appear for wrong credentials").toContain("Epic sadface: Sorry, this user has been locked out.");
+        const error = page.locator('[data-test="error"]');
+        await expect(error, 'Locked out user should see a locked-out error message').toHaveText('Epic sadface: Sorry, this user has been locked out.');
     });
 });
